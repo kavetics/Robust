@@ -112,7 +112,7 @@ export default function VideoPlayer() {
   }, [handleKeyDown, handleKeyUp]);
 
   return (
-    <div>
+    <div style={{ background: "#1e1e1e", minHeight: "100vh", padding: "20px", fontFamily: "sans-serif" }}>
       <div
         ref={containerRef}
         onWheel={handleWheel}
@@ -126,7 +126,9 @@ export default function VideoPlayer() {
           alignItems: "center",
           height: "80vh",
           overflow: "hidden",
-          backgroundColor: "black",
+          borderRadius: "20px",
+          background: "#2b2b2b",
+          boxShadow: "inset 8px 8px 16px #1a1a1a, inset -8px -8px 16px #3c3c3c",
           cursor: isPanning ? "grabbing" : scale > 1 ? "grab" : isDraggingSlider ? "ew-resize" : "default",
         }}
       >
@@ -155,7 +157,7 @@ export default function VideoPlayer() {
             controls={false}
             style={{
               position: "absolute",
-              clipPath: activeLayer ? "none" : `inset(0 ${100 - (sliderX / window.innerWidth) * 100}% 0 0)`,
+              clipPath: activeLayer ? "none" : `inset(0 calc(100% - ${sliderX}px) 0 0)`,
               transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
               width: "100%",
               height: "100%",
@@ -173,12 +175,13 @@ export default function VideoPlayer() {
               left: "50%",
               transform: "translateX(-50%)",
               padding: "8px 16px",
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
-              color: "white",
-              borderRadius: "8px",
-              fontSize: "1.2rem",
+              backgroundColor: "#292929",
+              color: "#ddd",
+              borderRadius: "12px",
+              fontSize: "1rem",
               zIndex: 5,
-              pointerEvents: "none"
+              pointerEvents: "none",
+              boxShadow: "4px 4px 10px #1a1a1a, -4px -4px 10px #3c3c3c"
             }}
           >
             {activeLayer === "video1" ? "Top Video Active" : "Bottom Video Active"}
@@ -189,26 +192,54 @@ export default function VideoPlayer() {
           style={{
             position: "absolute",
             top: 0,
-            left: sliderX,
-            width: "2px",
+            left: `${sliderX}px`,
+            width: "4px",
             height: "100%",
-            backgroundColor: "red",
+            backgroundColor: "#ff4757",
             zIndex: 3,
+            borderRadius: "2px",
+            boxShadow: "2px 2px 5px #1a1a1a",
             cursor: "ew-resize",
             display: activeLayer ? "none" : "block",
           }}
         />
       </div>
-      <div style={{ marginTop: "50px", textAlign: "center" }}>
-        <label style={{ margin: "0 20px" }}>
-        Import Original Video
-          <span style={{ color: "white", marginRight: "10px" }}></span>
-          <input type="file" accept="video/*" onChange={(e) => handleImportVideo(e, setVideo1Src)} />
+      <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <label style={{
+          display: "inline-block",
+          margin: "0 20px",
+          padding: "12px 28px",
+          borderRadius: "999px",
+          background: "linear-gradient(145deg, #ff6347, #ff4500)",
+          color: "#fff",
+          fontWeight: "bold",
+          textTransform: "uppercase",
+          fontSize: "0.9rem",
+          letterSpacing: "1px",
+          boxShadow: "0px 4px 12px rgba(255, 99, 71, 0.5)",
+          cursor: "pointer",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}>
+          Import Original Video
+          <input type="file" accept="video/*" onChange={(e) => handleImportVideo(e, setVideo1Src)} style={{ display: "none" }} />
         </label>
-        <label style={{ margin: "0 20px" }}>
-        Import Edited Video
-          <span style={{ color: "white", marginRight: "10px" }}></span>
-          <input type="file" accept="video/*" onChange={(e) => handleImportVideo(e, setVideo2Src)} />
+        <label style={{
+          display: "inline-block",
+          margin: "0 20px",
+          padding: "12px 28px",
+          borderRadius: "999px",
+          background: "linear-gradient(145deg, #ff6347, #ff4500)",
+          color: "#fff",
+          fontWeight: "bold",
+          textTransform: "uppercase",
+          fontSize: "0.9rem",
+          letterSpacing: "1px",
+          boxShadow: "0px 4px 12px rgba(255, 99, 71, 0.5)",
+          cursor: "pointer",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}>
+          Import Edited Video
+          <input type="file" accept="video/*" onChange={(e) => handleImportVideo(e, setVideo2Src)} style={{ display: "none" }} />
         </label>
       </div>
     </div>
